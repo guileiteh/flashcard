@@ -8,11 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const flashcards = await response.json();
         flashcardList.innerHTML = "";
         flashcards.forEach(flashcard => {
-            const div = document.createElement("div");
-            div.className = "flashcard";
-            div.innerHTML = `<strong>Pergunta:</strong> ${flashcard.question} <br><strong>Resposta:</strong> ${flashcard.answer}`;
-            flashcardList.appendChild(div);
+            addFlashcardToDOM(flashcard);
         });
+    };
+
+    const addFlashcardToDOM = (flashcard) => {
+        const div = document.createElement("div");
+        div.className = "flashcard";
+        div.innerHTML = `<strong>Pergunta:</strong> ${flashcard.question} 
+                         <div class="flashcard-answer">Resposta: ${flashcard.answer}</div>`;
+        
+        div.addEventListener("click", () => {
+            const answerDiv = div.querySelector(".flashcard-answer");
+            answerDiv.style.display = answerDiv.style.display === "none" || answerDiv.style.display === "" ? "block" : "none";
+        });
+
+        flashcardList.appendChild(div);
     };
 
     flashcardForm.addEventListener("submit", async (e) => {
@@ -20,16 +31,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const question = document.getElementById("question").value;
         const answer = document.getElementById("answer").value;
 
-        await fetch("/api/flashcards", {
+        const newFlashcard = await fetch("/api/flashcards", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ question, answer })
-        });
+        }).then(res => res.json());
 
         flashcardForm.reset();
-        fetchFlashcards();
+        addFlashcardToDOM(newFlashcard);
     });
 
     fetchFlashcards();
