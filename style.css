@@ -17,9 +17,9 @@
 }
 
 .flashcard {
-    display: none; /* Inicialmente, todos os flashcards ficam invisíveis */
+    display: none; 
 }
 
 .flashcard.active {
-    display: block; /* Apenas o flashcard ativo fica visível */
+    display: block; 
 }
