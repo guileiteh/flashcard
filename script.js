@@ -1,3 +1,4 @@
+// Lista de perguntas e respostas
 const flashcardsData = [
     { question: "Qual é a capital da França?", answer: "Paris" },
     { question: "Qual é a fórmula da água?", answer: "H₂O" },
@@ -5,17 +6,15 @@ const flashcardsData = [
     { question: "Qual o planeta mais próximo do Sol?", answer: "Mercúrio" }
 ];
 
-let currentFlashcardIndex = 0; 
-
-
+// Função para criar flashcards dinamicamente
 function createFlashcards() {
     const container = document.querySelector('.container');
     
     flashcardsData.forEach(flashcard => {
-        
+        // Criar o flashcard
         const card = document.createElement('div');
         card.classList.add('flashcard');
-        card.onclick = () => flipFlashcard(card); 
+        card.onclick = () => flipFlashcard(card); // Adicionar evento de clique
 
         const cardInner = document.createElement('div');
         cardInner.classList.add('flashcard-inner');
@@ -28,47 +27,18 @@ function createFlashcards() {
         cardBack.classList.add('flashcard-back');
         cardBack.textContent = "Resposta: " + flashcard.answer;
 
-        
+        // Estrutura do flashcard
         cardInner.appendChild(cardFront);
         cardInner.appendChild(cardBack);
         card.appendChild(cardInner);
         container.appendChild(card);
     });
-    
-    showFlashcard(currentFlashcardIndex); 
 }
 
+// Função para girar o flashcard
 function flipFlashcard(card) {
     card.classList.toggle('is-flipped');
 }
 
-
-function showFlashcard(index) {
-    const flashcards = document.querySelectorAll('.flashcard');
-    
-    
-    flashcards.forEach(card => card.classList.remove('active'));
-
-    
-    flashcards[index].classList.add('active');
-}
-
-
-function nextFlashcard() {
-    const flashcards = document.querySelectorAll('.flashcard');
-    currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length; 
-    showFlashcard(currentFlashcardIndex);
-}
-
-
-window.onload = function() {
-    createFlashcards();
-
-    
-    const nextButton = document.createElement('button');
-    nextButton.classList.add('button');
-    nextButton.textContent = "Próxima Pergunta";
-    nextButton.onclick = nextFlashcard;
-
-    document.body.appendChild(nextButton); 
-};
+// Chama a função ao carregar a página
+window.onload = createFlashcards;
