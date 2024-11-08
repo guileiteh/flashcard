@@ -9,7 +9,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #000000;
+    background-color: #cbf5ea;
 }
 
 .container {
@@ -56,7 +56,7 @@ body {
 }
 
 .flashcard-front {
-    background-color: #4b0092;
+    background-color: #eb7e25;
     border: 1px solid #ddd;
 }
 
